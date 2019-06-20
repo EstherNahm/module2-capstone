@@ -97,5 +97,12 @@ public class NationalPark {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return park_id + ". " + name + "\n";
+	}
 	
 }

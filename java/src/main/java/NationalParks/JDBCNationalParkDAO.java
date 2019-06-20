@@ -1,6 +1,7 @@
 package NationalParks;
 
 import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +22,12 @@ public class JDBCNationalParkDAO implements NationalParkDAO{
 	 * @see NationalParks.NationalParkDAO#getAllParks(java.lang.String)
 	 */
 	@Override
-	public List<NationalPark> getAllParks(String parkName) {
+	public List<NationalPark> getAllParks() { 
 		List<NationalPark> allParks = new ArrayList<NationalPark>();
 		
 		String sqlSearchParks = "SELECT * FROM park";
 		
-		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchParks, parkName);
+		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchParks);
 		
 		while(returned.next()) {
 			NationalPark aPark = mapRowToParks(returned);
@@ -84,7 +85,7 @@ public class JDBCNationalParkDAO implements NationalParkDAO{
 		NationalPark aPark = new NationalPark();
 		
 		aPark.setPark_id(returned.getInt("park_id"));
-		aPark.setName(returned.getString("parkName"));
+		aPark.setName(returned.getString("name"));
 		aPark.setLocation(returned.getString("location"));
 		aPark.setEstablish_date(returned.getDate("establish_date"));
 		aPark.setArea(returned.getInt("area"));
