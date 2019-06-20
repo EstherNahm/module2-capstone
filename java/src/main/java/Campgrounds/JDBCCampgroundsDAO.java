@@ -1,18 +1,34 @@
 package Campgrounds;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.rowset.*;
 
+
 public class JDBCCampgroundsDAO implements CampgroundsDAO {
 
-	/* (non-Javadoc)
-	 * @see Campgrounds.CampgroundsDAO#getAllCampgrounds(java.lang.String)
-	 */
+	private JdbcTemplate jdbcTemplate;
+	
+	public JDBCCampgroundsDAO(DataSource dataSource) {
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	}
 	@Override
-	public List<Campgrounds> getAllCampgrounds(String campName) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Campgrounds> getAllCampgrounds() {
+		List<Campgrounds> allGrounds = new ArrayList<Campgrounds>();
+		
+		String sqlSearchGrounds = "SELECT * FROM campground";
+		
+		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchGrounds);
+		
+		while(returned.next()) {
+			Campgrounds aGround = mapRowToGrounds(returned);
+			allGrounds.add(aGround);
+		}
+		return allGrounds;
 	}
 
 	/* (non-Javadoc)
@@ -58,6 +74,21 @@ public class JDBCCampgroundsDAO implements CampgroundsDAO {
 	public Campgrounds isAvailable(Boolean isAvailable) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public 
+	
+	private Campgrounds mapRowToGrounds(SqlRowSet returned) {
+		Campgrounds aCampground = new Campgrounds();
+		
+		aCampground.setCampground_id(returned.getInt("campground_id"));
+		aCampground.setPark_id(returned.getInt("park_id"));
+		aCampground.setName(returned.getString("name"));
+		aCampground.setOpen_from_mm(returned.getString("open_from_mm"));
+		aCampground.setOpen_to_mm(returned.getString("open_to_mm"));
+		aCampground.setDaily_fee(returned.getDouble("daily_fee"));
+		
+		return aCampground;
 	}
 
 }

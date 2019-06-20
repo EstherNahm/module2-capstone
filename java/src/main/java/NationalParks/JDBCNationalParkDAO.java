@@ -40,11 +40,11 @@ public class JDBCNationalParkDAO implements NationalParkDAO{
 	 * @see NationalParks.NationalParkDAO#searchByPark(java.lang.String)
 	 */
 	@Override
-	public List<NationalPark> searchByPark(int parkId) {
+	public List<NationalPark> searchByPark(String name) {
 		List<NationalPark> allParks = new ArrayList<NationalPark>();
-		String sqlSearchParks = "SELECT * FROM park WHERE park_id = ?";
+		String sqlSearchParks = "SELECT * FROM park WHERE name = ?";
 		
-		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchParks, parkId);
+		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchParks, name);
 		
 		while(returned.next()) {
 			NationalPark aPark = mapRowToParks(returned);
@@ -52,6 +52,20 @@ public class JDBCNationalParkDAO implements NationalParkDAO{
 		}
 		return allParks;
 	}
+	
+//	public void showParkByName(String choice) {
+//		List<NationalPark> parkList = getAllParks();           // invoke method to display items in Vending Machine
+//		String[] parkNames = new String[parkList.size() + 1];
+//		int parkNum = 0;
+//		for(NationalPark aPark : parkList) {
+//			parkNames[parkNum] = aPark.getName();
+//			parkNum++;
+//		}
+//		parkNames[parkNum] = "Quit";
+//		choice = (String)parkMenu.getChoiceFromOptions(parkNames);
+//		System.out.println("Choice = " + choice);
+//		break;    
+//	}
 
 	/* (non-Javadoc)
 	 * @see NationalParks.NationalParkDAO#save(java.lang.String)

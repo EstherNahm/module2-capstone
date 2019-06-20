@@ -5,7 +5,7 @@ import java.util.List;
 public interface NationalParkDAO {
 	
 	public List<NationalPark> getAllParks();
-	public List<NationalPark> searchByPark(int parkId);
+	public List<NationalPark> searchByPark(String name);
 	public void save(String parkName);
 	public void delete(String parkName);
 	public void update(String parkName);
