@@ -15,12 +15,16 @@ public class CampgroundCLI {
 		CampgroundCLI application = new CampgroundCLI(dataSource);
 		application.run();
 	}
-
+	
 	public CampgroundCLI(DataSource datasource) {
+		
+		
+		
 		// create your DAOs here
 	}
 
 	public void run() {
-
+		
+		
 	}
 }
