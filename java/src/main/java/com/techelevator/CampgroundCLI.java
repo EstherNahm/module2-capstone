@@ -6,6 +6,8 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 import com.techelevator.Menu;
 
+import Campgrounds.Campgrounds;
+import Campgrounds.CampgroundsDAO;
 import Campgrounds.JDBCCampgroundsDAO;
 import NationalParks.JDBCNationalParkDAO;
 import NationalParks.NationalPark;
@@ -23,11 +25,14 @@ public class CampgroundCLI {
 
 		JDBCNationalParkDAO parkDAO = new JDBCNationalParkDAO(dataSource);
 		JDBCCampgroundsDAO groundsDAO = new JDBCCampgroundsDAO(dataSource);
+		
 
 		Menu appMenu = new Menu(System.in, System.out);
 
 		CampgroundCLI application = new CampgroundCLI(appMenu);
 		application.run(parkDAO);
+		
+		
 	}
 
 	// public String [] displayParkNames = parkDAO;
@@ -54,6 +59,7 @@ public class CampgroundCLI {
 	// }
 
 	public void run(JDBCNationalParkDAO parkDAO) {
+		//public void run(JDBCCampgroundsDAO campgroundDAO) {
 		boolean shouldProcess = true;         // Loop control variable
 		
 		while(shouldProcess) {                // Loop until user indicates they want to exit
@@ -63,7 +69,7 @@ public class CampgroundCLI {
 			switch(choice) {                  // Process based on user menu choice
 			
 				case MAIN_MENU_DISPLAY_PARKS:
-					List<NationalPark> parkList = parkDAO.getAllParks();           // invoke method to display items in Vending Machine
+					List<NationalPark> parkList = parkDAO.getAllParks();          
 					String[] parkNames = new String[parkList.size() + 1];
 					int parkNum = 0;
 					for(NationalPark aPark : parkList) {
@@ -75,33 +81,57 @@ public class CampgroundCLI {
 					
 					List<NationalPark> parkInfo = parkDAO.searchByPark(choice);
 					for(NationalPark park: parkInfo) {
-						System.out.println(park.getName());
-						System.out.println(park.getLocation());
-						System.out.println(park.getEstablish_date());
-						System.out.println(park.getArea());
-						System.out.println(park.getVisitors());
+						System.out.println(park.getName() + " National Park");
+						System.out.println("Location: " + park.getLocation());
+						System.out.println("Established: " + park.getEstablish_date());
+						System.out.println("Area: " + park.getArea());
+						System.out.println("Annual Visitors: " + park.getVisitors());
+						System.out.println();
 						System.out.println(park.getDescription());
-						
 					}
+					
+						System.out.println();
+						System.out.println("Select a command:");
+						boolean shouldProcess1 = true;
+						while(shouldProcess1) { 
+							String choice1 = (String)groundsMenu.getChoiceFromOptions(PARK_INFO_OPTIONS);
+							switch(choice1) {
+							case PARK_INFO_MENU:
+							
+							//campgroundDAO.getAllCampgrounds();
+							
+							case PARK_INFO_SEARCH:
+							
+							case PARK_INFO_RETURN:
+							break;
+							}
+							
+						}
+					}
+			break;  	
+				}
+		return;
+		
+	}			
+			
+	
+	
 					
 					// Call another method (runCampgroundMenu) once the user has made a "choice"
 					// 	- pass along the selected park
-					// 
 
-
+	// Exit switch statement
 					
-					break;                    // Exit switch statement
-					
-				case MAIN_MENU_OPTION_EXIT:
-					endMethodProcessing();    // Invoke method to perform end of method processing
-					shouldProcess = false; 
+//				case MAIN_MENU_OPTION_EXIT:
+//					endMethodProcessing();    // Invoke method to perform end of method processing
+//					shouldProcess = false; 
 
-					break;                    // Exit switch statement
-			}	
-		}return; // End method and return to caller
+//		break;                    // Exit switch statement
+	
+	 // End method and return to caller
 
-	}
 
+	
 	public static void endMethodProcessing() {
 		System.out.println("Fuck off, Mate");
 	}

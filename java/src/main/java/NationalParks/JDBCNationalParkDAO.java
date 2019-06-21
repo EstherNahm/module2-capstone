@@ -10,6 +10,8 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.rowset.*;
 
+import Campgrounds.Campgrounds;
+
 
 public class JDBCNationalParkDAO implements NationalParkDAO{
 
@@ -52,6 +54,7 @@ public class JDBCNationalParkDAO implements NationalParkDAO{
 		}
 		return allParks;
 	}
+	
 	
 //	public void showParkByName(String choice) {
 //		List<NationalPark> parkList = getAllParks();           // invoke method to display items in Vending Machine
