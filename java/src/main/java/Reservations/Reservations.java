@@ -7,9 +7,10 @@ public class Reservations {
 	private int reservationId;
 	private int siteId;
 	private String reservationName;
-	private Date fromDate;
-	private Date toDate;
+	private String fromDate;
+	private String toDate;
 	private Date createDate;
+	
 	/**
 	 * @return the reservationId
 	 */
@@ -49,25 +50,25 @@ public class Reservations {
 	/**
 	 * @return the fromDate
 	 */
-	public Date getFromDate() {
+	public String getFromDate() {
 		return fromDate;
 	}
 	/**
 	 * @param fromDate the fromDate to set
 	 */
-	public void setFromDate(Date fromDate) {
+	public void setFromDate(String fromDate) {
 		this.fromDate = fromDate;
 	}
 	/**
 	 * @return the toDate
 	 */
-	public Date getToDate() {
+	public String getToDate() {
 		return toDate;
 	}
 	/**
 	 * @param toDate the toDate to set
 	 */
-	public void setToDate(Date toDate) {
+	public void setToDate(String toDate) {
 		this.toDate = toDate;
 	}
 	/**
