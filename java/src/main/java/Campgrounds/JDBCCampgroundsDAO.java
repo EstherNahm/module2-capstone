@@ -30,6 +30,19 @@ public class JDBCCampgroundsDAO implements CampgroundsDAO {
 		}
 		return allGrounds;
 	}
+	
+	public List<Campgrounds> getCampgroundById(int campgroundId) {
+		List<Campgrounds> groundsId = new ArrayList<Campgrounds>();
+		
+		String sqlSearchId = "SELECT * FROM campground JOIN park ON campground.park_id = park.park_id WHERE park.park_id = ?";
+		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchId);
+
+		while(returned.next()) {
+			Campgrounds aGround = mapRowToGrounds(returned);
+			groundsId.add(aGround);
+		}
+		return groundsId;
+	}
 
 	/* (non-Javadoc)
 	 * @see Campgrounds.CampgroundsDAO#searchByCampgrounds(java.lang.String)
@@ -87,9 +100,10 @@ public class JDBCCampgroundsDAO implements CampgroundsDAO {
 		aCampground.setName(returned.getString("name"));
 		aCampground.setOpen_from_mm(returned.getString("open_from_mm"));
 		aCampground.setOpen_to_mm(returned.getString("open_to_mm"));
-		aCampground.setDaily_fee(returned.getDouble("daily_fee"));
+		aCampground.setDaily_fee(returned.getString("daily_fee"));
 		
 		return aCampground;
 	}
+	
 
 }

@@ -7,7 +7,7 @@ public class Campgrounds {
 	private String name;
 	private String open_from_mm;
 	private String open_to_mm;
-	private double daily_fee;
+	private String daily_fee;
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -79,13 +79,13 @@ public class Campgrounds {
 	/**
 	 * @return the daily_fee
 	 */
-	public double getDaily_fee() {
+	public String getDaily_fee() {
 		return daily_fee;
 	}
 	/**
 	 * @param daily_fee the daily_fee to set
 	 */
-	public void setDaily_fee(double daily_fee) {
+	public void setDaily_fee(String daily_fee) {
 		this.daily_fee = daily_fee;
 	}
 
