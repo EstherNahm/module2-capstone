@@ -31,11 +31,11 @@ public class JDBCCampgroundsDAO implements CampgroundsDAO {
 		return allGrounds;
 	}
 	
-	public List<Campgrounds> getCampgroundById(int campgroundId) {
+	public List<Campgrounds> getCampgroundById(int parkId) {
 		List<Campgrounds> groundsId = new ArrayList<Campgrounds>();
 		
 		String sqlSearchId = "SELECT * FROM campground JOIN park ON campground.park_id = park.park_id WHERE park.park_id = ?";
-		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchId);
+		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchId, parkId);
 
 		while(returned.next()) {
 			Campgrounds aGround = mapRowToGrounds(returned);

@@ -91,43 +91,39 @@ public class CampgroundCLI {
 						System.out.println();
 						System.out.println("Select a command:");
 						boolean shouldProcess1 = true;
-						while(shouldProcess1) { 
+						while((shouldProcess1)) { 
 							String choice1 = (String)menu.getChoiceFromOptions(PARK_INFO_OPTIONS);
 							switch(choice1) {
-							case PARK_INFO_MENU:	
-							//if(choice1.equals(parkNames)) {
-
-							campgroundsDAO.getCampgroundById(1);
-							List<Campgrounds> allGrounds = campgroundsDAO.getAllCampgrounds();
-
-							String[] groundNames = new String[allGrounds.size()+1];
-							int groundNum = 0;
-							for (Campgrounds ground: allGrounds) {
-								groundNames[groundNum] = ground.getName() + "  " + ground.getOpen_from_mm() + "  " + ground.getOpen_to_mm() + "  " + ground.getDaily_fee(); 
-								groundNum++;
-							}
-							groundNames[groundNum] = "Return to previous screen";
-							choice1 = (String)menu.getChoiceFromOptions(groundNames);
+								case PARK_INFO_MENU:
+							List<Campgrounds> groundID = campgroundsDAO.getCampgroundById(parkInfo.get(0).getPark_id());
+									String[] campGround = new String [groundID.size() + 1];
+									int groundNum1 = 0;
+									for (Campgrounds ground: groundID) {
+										campGround[groundNum1] = ground.getName() + "  " + ground.getOpen_from_mm() + "  " + ground.getOpen_to_mm() + "  " + ground.getDaily_fee();
+										groundNum1++;
+									}
 							
-							
-							
-							
+							campGround[groundNum1] = "Return to previous screen";
+							choice1 = (String)menu.getChoiceFromOptions(campGround);
+							break;
 							
 							case PARK_INFO_SEARCH:
+								
+								
 							
 							case PARK_INFO_RETURN:
 							break;
 							}
 							
 						}
-					}
+					
 			break;  	
 				}
-		return;
+		
 		
 	}			
-	
-
+	return;
+	}
 	
 	// Call another method (runCampgroundMenu) once the user has made a "choice"
 					// 	- pass along the selected park
