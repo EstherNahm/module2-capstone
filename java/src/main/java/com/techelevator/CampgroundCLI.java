@@ -88,24 +88,7 @@ public class CampgroundCLI {
 					// 	- pass along the selected park
 					// 
 
-//	public void run(JDBCCampgroundsDAO groundsDAO) {
-//						boolean shouldProcess = true;         // Loop control variable
-//						
-//						while(shouldProcess) {                // Loop until user indicates they want to exit
-//							
-//							String choice = (String)groundsMenu.getChoiceFromOptions(PARK_INFO_OPTIONS);  // Display menu and get choice
-//							
-//							switch(choice) {                  // Process based on user menu choice
-//							
-//								case PARK_INFO_MENU:
-//									break;
-//								
-//								case PARK_INFO_SEARCH:
-//									break;
-//									
-//								case PARK_INFO_RETURN:
-//									break;
-//							}
+
 					
 					break;                    // Exit switch statement
 					

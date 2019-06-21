@@ -76,7 +76,8 @@ public class JDBCCampgroundsDAO implements CampgroundsDAO {
 		return null;
 	}
 	
-	public 
+
+	
 	
 	private Campgrounds mapRowToGrounds(SqlRowSet returned) {
 		Campgrounds aCampground = new Campgrounds();
