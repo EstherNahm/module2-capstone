@@ -12,6 +12,7 @@ import NationalParks.JDBCNationalParkDAO;
 import NationalParks.NationalPark;
 import NationalParks.NationalParkDAO;
 import Reservations.JDBCReservationsDAO;
+import Reservations.Reservations;
 import Reservations.ReservationsDAO;
 import Site.SiteDAO;
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ public class CampgroundCLI {
 	private static final String PARK_INFO_RETURN = "Return to Previous";
 	private static final String[] PARK_INFO_OPTIONS = { PARK_INFO_MENU, PARK_INFO_SEARCH, PARK_INFO_RETURN };
 
+	
+	
 	private Menu menu;
 	private CampgroundsDAO campgroundsDAO;
 	private NationalParkDAO nationalparkDAO;
@@ -51,6 +54,7 @@ public class CampgroundCLI {
 		
 		campgroundsDAO = new JDBCCampgroundsDAO(dataSource);
 		nationalparkDAO = new JDBCNationalParkDAO(dataSource);	
+		reservationsDAO = new JDBCReservationsDAO(dataSource);
 	}
 	
 	// public CampgroundCLI(DataSource datasource) {
@@ -105,10 +109,34 @@ public class CampgroundCLI {
 							
 							campGround[groundNum1] = "Return to previous screen";
 							choice1 = (String)menu.getChoiceFromOptions(campGround);
+							
+							
 							break;
 							
 							case PARK_INFO_SEARCH:
+								Scanner userInput = new Scanner(System.in);
+								System.out.println("Please enter reservation ID");
+								String value = userInput.nextLine();
+								int reservationNum = Integer.parseInt(value);
+								if(value.equals(userInput)) {
+								List<Reservations> aReservation = reservationsDAO.searchByReservation(reservationNum);
+								String[] resArray = new String[aReservation.size()];
+								int thisRes = 0;								
+								for(Reservations res : aReservation) {
+								resArray[thisRes] = res.getReservationName() + " " + res.getSiteId() + " " + res.getFromDate() + " " + res.getToDate() + " " + res.getCreateDate();
 								
+								}
+								}
+								
+//								resNum ++;
+//								String[] reservation = new String[aReservation.size()];
+//								int resNum = 0;
+//								for(Reservations res : aReservation) {
+//									reservation[resNum] = res.getReservationName() + " " + res.getSiteId() + " " + res.getFromDate() + " " + res.getToDate() + " " + res.getCreateDate();
+//									resNum ++;
+////								}
+								break;
+								//if(value.equals())
 								
 							
 							case PARK_INFO_RETURN:
