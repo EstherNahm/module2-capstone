@@ -65,10 +65,11 @@ private JdbcTemplate jdbcTemplate;
 		
 	}
 	
-public List<Site> makeAReservation(int siteId, Date fromDate, Date toDate) {
+public List<Site> makeAReservation(int siteId, Date fromDate, Date toDate) { //Method to make a reservation
 		
-		List<Site> allReservations = new ArrayList<Site>();	
+		List<Site> allReservations = new ArrayList<Site>();	//Declaring and instantiating new  Site array list
 		
+		// Sql search statement
 		String sqlSearchReservations = "SELECT * " +
 				"FROM site " +
 				"WHERE site.site_id NOT IN (SELECT site_id from reservation) " +
@@ -77,13 +78,13 @@ public List<Site> makeAReservation(int siteId, Date fromDate, Date toDate) {
 				"reservation.from_date NOT between ? and ? " +
 				"AND reservation.to_date NOT between ? and ?) limit 5 ";
 		
-		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchReservations, siteId, fromDate, toDate, fromDate, toDate);
+		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchReservations, siteId, fromDate, toDate, fromDate, toDate); //SqlRowSet object that inserts our passed in information into our SQL search
 		
-		while(returned.next()) {
-			Site reservation = mapRowToSite(returned);
-			allReservations.add(reservation);
+		while(returned.next()) {//Loop through as long as their is another item matching the search criteria
+			Site reservation = mapRowToSite(returned); //Putting info from our SqlRowSet into our mapRow method into a site object containing a complete site
+			allReservations.add(reservation); //Adding that site to our list
 		}
-		return allReservations;
+		return allReservations; //Returning the list of sites
 
 	}
 	

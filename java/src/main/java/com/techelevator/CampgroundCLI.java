@@ -50,23 +50,20 @@ public class CampgroundCLI {
 	public CampgroundCLI() {
 		this.menu = new Menu(System.in, System.out);
 		
-		BasicDataSource dataSource = new BasicDataSource();
+		BasicDataSource dataSource = new BasicDataSource(); //Connecting to our database
 		dataSource.setUrl("jdbc:postgresql://localhost:5432/campground");
 		dataSource.setUsername("postgres");
 		dataSource.setPassword("postgres1");
 		
-		campgroundsDAO = new JDBCCampgroundsDAO(dataSource);
-		nationalparkDAO = new JDBCNationalParkDAO(dataSource);	
-		reservationsDAO = new JDBCReservationsDAO(dataSource);
-		siteDAO = new JDBCSiteDAO(dataSource);
+		campgroundsDAO = new JDBCCampgroundsDAO(dataSource); //Object to access our Campgrounds data
+		nationalparkDAO = new JDBCNationalParkDAO(dataSource);	// Object to access our NationalPark data
+		reservationsDAO = new JDBCReservationsDAO(dataSource); // Object to access Reservations data
+		siteDAO = new JDBCSiteDAO(dataSource); // Object to access Site data
 		
-		//setSiteDAO(new JDBCSiteDAO(dataSource));
+		
 	}
 	
-	// public CampgroundCLI(DataSource datasource) {
-
-	// create your DAOs here
-	// }
+	
 
 	public void run() {
 		boolean shouldProcess = true;         // Loop control variable	
@@ -77,50 +74,51 @@ public class CampgroundCLI {
 			switch(choice) {                  // Process based on user menu choice
 			
 				case MAIN_MENU_DISPLAY_PARKS:
-					List<NationalPark> parkList = nationalparkDAO.getAllParks();          
-					String[] parkNames = new String[parkList.size() + 1];
-					int parkNum = 0;
-					for(NationalPark aPark : parkList) {
-						parkNames[parkNum] = aPark.getName();
-						parkNum++;
+					List<NationalPark> parkList = nationalparkDAO.getAllParks();   //Accessing the datasource and using our method to get all the parks       
+					String[] parkNames = new String[parkList.size() + 1]; //String array that holds all the park info, +1 for "Quit" option
+					int parkNum = 0; //counter for the for loop
+					for(NationalPark aPark : parkList) {//for loop to get all the park names from the List
+						parkNames[parkNum] = aPark.getName(); //putting all of the names in the parkNames string
+						parkNum++; //iterate to the next item in the list
 					}
-					parkNames[parkNum] = "Quit";
-					choice = (String)menu.getChoiceFromOptions(parkNames);
+					parkNames[parkNum] = "Quit"; // The reason we added + 1 in our array
+					choice = (String)menu.getChoiceFromOptions(parkNames); //updating the value of choice
 					
-					List<NationalPark> parkInfo = nationalparkDAO.searchByPark(choice);
-					for(NationalPark park: parkInfo) {
-						System.out.println(park.getName() + " National Park");
-						System.out.println("Location: " + park.getLocation());
-						System.out.println("Established: " + park.getEstablish_date());
-						System.out.println("Area: " + park.getArea());
-						System.out.println("Annual Visitors: " + park.getVisitors());
-						System.out.println();
-						System.out.println(park.getDescription());
+					List<NationalPark> parkInfo = nationalparkDAO.searchByPark(choice); // Uses choice from user to bring up all of the park info
+					for(NationalPark park: parkInfo) { //itterate through the parkInfo list
+						System.out.println(park.getName() + " National Park"); // prints name of park
+						System.out.println("Location: " + park.getLocation()); // prints location of park
+						System.out.println("Established: " + park.getEstablish_date()); // prints established date of park
+						System.out.println("Area: " + park.getArea()); // prints area of park
+						System.out.println("Annual Visitors: " + park.getVisitors()); //prints annual visitors of the park
+						System.out.println();//prints a blank line
+						System.out.println(park.getDescription());//prints description
 					}
 					
 						System.out.println();
 						System.out.println("Select a command:");
 						
 						
-						boolean shouldProcess1 = true;
-						while((shouldProcess1)) { 
-							String choice1 = (String)menu.getChoiceFromOptions(PARK_INFO_OPTIONS);
+						boolean shouldProcess1 = true; //Loop control variable
+						while((shouldProcess1)) { // Loop until user wants to exit
+							String choice1 = (String)menu.getChoiceFromOptions(PARK_INFO_OPTIONS); //Variable to hold user selection
 							
-				switch(choice1) {
+				switch(choice1) { //Switch statement based on user selection
 					case PARK_INFO_MENU:
 			
-				List<Campgrounds> groundID = campgroundsDAO.getCampgroundById(parkInfo.get(0).getPark_id());
-						String[] campGround = new String [groundID.size() + 1];
-						int groundNum1 = 0;
-						for (Campgrounds ground: groundID) {
+				List<Campgrounds> groundID = campgroundsDAO.getCampgroundById(parkInfo.get(0).getPark_id());//List containing all the campgrounds info and using our method to select campgrounds based on the ID
+						String[] campGround = new String [groundID.size() + 1]; //instantiate new String[] to hold the info from the list
+						int groundNum1 = 0;//Loop variable
+						for (Campgrounds ground: groundID) {//for loop
 								campGround[groundNum1] = ground.getCampground_id() + "   " + ground.getName() + "   " + ground.getOpen_from_mm() + "   " + ground.getOpen_to_mm() + "   $" + ground.getDaily_fee();
-								groundNum1++;
+								// Putting the campgroundId, name, open from date, to date and daily free from campgrounds with selected campground ID
+								groundNum1++;//Update loop variable
 							}
 							System.out.println();		
 							System.out.println("------------CAMPGROUND INFORMATION--------------");
 							System.out.println(" (ID, NAME, OPEN FROM(MONTH), OPEN UNTIL(MONTH), FEE(DAY)");
 							campGround[groundNum1] = "Return to previous screen to make a reservation";
-							choice1 = (String)menu.getChoiceFromOptions(campGround);
+							choice1 = (String)menu.getChoiceFromOptions(campGround); //Update value of users choice
 							
 							
 							break;
@@ -128,39 +126,40 @@ public class CampgroundCLI {
 					
 				case RESERVATION_SEARCH:
 								
-					Scanner myKeyboard = new Scanner(System.in);
+					Scanner myKeyboard = new Scanner(System.in); //Declare and instantiate a scanner so we can read user input
 					System.out.println("What is your reservation ID?");
-					String reservation1 = myKeyboard.nextLine();
-					int reservationID = Integer.parseInt(reservation1); 
+					String reservation1 = myKeyboard.nextLine(); //Variable to hold what the user inputs
+					int reservationID = Integer.parseInt(reservation1);  //Parsing the string entered into an int
 					
-					List<Reservations> reservation = reservationsDAO.searchByReservationId(reservationID);
-					String[] reservations1 = new String [reservation.size() + 1];
+					List<Reservations> reservation = reservationsDAO.searchByReservationId(reservationID);//List containing all reservations based on reservation Id using our method
+					String[] reservations1 = new String [reservation.size() + 1]; //Declaring and Instantiating string to hold reservation info from list
 							
-							int num = 0;
-							for (Reservations res : reservation) {
+							int num = 0; //loop variable
+							for (Reservations res : reservation) {//for loop
 								reservations1[num] = res.getReservationId() + " " + res.getReservationName() + " " + res.getFromDate() + " " + res.getToDate();
-								num++;
+								//Adds the information from the List to our String[] containing reservation ID, Name, From Date, To date
+								num++;//Update loop variable
 							}
 							
-							reservations1[num] = "Return to previous screen to make a reservation";
-							choice1 = (String)menu.getChoiceFromOptions(reservations1);
+							reservations1[num] = "Return to previous screen to make a reservation";//Added +1 when we instantiated our Array size to add this option
+							choice1 = (String)menu.getChoiceFromOptions(reservations1);//updating value of user choice variable
 				break;
 					
 				
 				case SITE_SEARCH:
 					
-					Scanner myKeyboard1 = new Scanner(System.in);
+					Scanner myKeyboard1 = new Scanner(System.in); //Declare and instantiate new scanner object to read user input
 					System.out.println("What is the ID of your desired campground?");
-					String id = myKeyboard1.nextLine();
-					int siteId = Integer.parseInt(id);
+					String id = myKeyboard1.nextLine(); //Variable to hold user input
+					int siteId = Integer.parseInt(id); //Parsing users input from string to int
 					
 					System.out.println("What is your arrival date? (YYYY-MM-DD)");
-					Date arrivalDate = Date.valueOf(myKeyboard1.nextLine());
+					Date arrivalDate = Date.valueOf(myKeyboard1.nextLine()); //Variable to hold the date entered by user for from date
 					System.out.println("What is your departure date? (YYYY-MM-DD)");
-					Date departDate = Date.valueOf(myKeyboard1.nextLine());
+					Date departDate = Date.valueOf(myKeyboard1.nextLine()); //Variable to hold the data entered by user for to date
 					
 					
-					List<Site> reservation2 = siteDAO.makeAReservation(siteId, arrivalDate, departDate);
+					List<Site> reservation2 = siteDAO.makeAReservation(siteId, arrivalDate, departDate); 
 					Site[] reservations3 = new Site [reservation2.size()];
 					
 					System.out.println("Here are the top 5 available sites for reservation: ");
@@ -172,24 +171,24 @@ public class CampgroundCLI {
 			
 				case MAKE_RESERVATION:
 					System.out.println();
-					Scanner myKeyboard2 = new Scanner(System.in);
+					Scanner myKeyboard2 = new Scanner(System.in); //Declare and instantiate Scanner object to read user data
 					System.out.println("Would you like to make a reservation? (Y) or (N)");
-					String yesNo = myKeyboard2.nextLine();
+					String yesNo = myKeyboard2.nextLine(); //Variable to hold user selection
 					
 					
 					System.out.println("Enter the site ID you'd like to reserve.");
-					String id1 = myKeyboard2.nextLine();
-					int siteId1 = Integer.parseInt(id1);
+					String id1 = myKeyboard2.nextLine(); //Variable to hold user selection
+					int siteId1 = Integer.parseInt(id1);//Parsing user selection from String to int
 					System.out.println("What name would you like on the reservation?");
-					String name = myKeyboard2.nextLine();
+					String name = myKeyboard2.nextLine();//Variable to hold the user input for name of reservation
 					System.out.println("What is your arrival date? (YYYY-MM-DD)");
-					Date arrivalDate1 = Date.valueOf(myKeyboard2.nextLine());
+					Date arrivalDate1 = Date.valueOf(myKeyboard2.nextLine());//Date variable to hold user input as from date
 					System.out.println("What is your departure date? (YYYY-MM-DD)");
-					Date departDate1 = Date.valueOf(myKeyboard2.nextLine());
+					Date departDate1 = Date.valueOf(myKeyboard2.nextLine());//Date variable to hold user input as to date
 					
 					
-					long difference = departDate1.getTime()-arrivalDate1.getTime();
-					int diffDays = (int)(difference/(24 * 60 * 60 * 1000));
+					long difference = departDate1.getTime()-arrivalDate1.getTime(); //Declaring and instantiating an object that subtracts dates entered
+					int diffDays = (int)(difference/(24 * 60 * 60 * 1000));//Casting the long to an int doing the math to make it the difference in days
 					System.out.println("The difference between those 2 days is: " + diffDays);
 					
 			
@@ -200,7 +199,7 @@ public class CampgroundCLI {
 					} else {
 						
 						
-						int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1);
+						int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1); //Variable that holds users input for Site Id, name, arrival and departure dates
 						
 //						//String[] reserve1 = new String [reserve.size()];
 //					
@@ -209,7 +208,7 @@ public class CampgroundCLI {
 //							reserve1[number] = res.getReservationName();
 //						
 						//}
-						System.out.println("The reservation has been made and the id is " + confirmed);
+						System.out.println("The reservation has been made and the id is " + confirmed); //Print line the confirms reservation
 					}
 					
 					

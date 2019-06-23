@@ -35,19 +35,20 @@ public class JDBCCampgroundsDAO implements CampgroundsDAO {
 		return allGrounds;
 	}
 	
-	public List<Campgrounds> getCampgroundById(int parkId) {
+	public List<Campgrounds> getCampgroundById(int parkId) {//Method to select the campgrounds by Park ID
 		
-		List<Campgrounds> groundsId = new ArrayList<Campgrounds>();
+		List<Campgrounds> groundsId = new ArrayList<Campgrounds>(); //Declare and instantiate new List[]
 		
 		String sqlSearchId = "SELECT * FROM campground JOIN park ON campground.park_id = park.park_id WHERE park.park_id = ?";
+		//SQL statement to Search by Park ID
 		
-		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchId, parkId);
+		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchId, parkId); //SQL search that will use parkId entered as variable for the where clause
 
-			while(returned.next()) {
-				Campgrounds aGround = mapRowToGrounds(returned);
-				groundsId.add(aGround);
+			while(returned.next()) { //While loop for our SqlRowSet
+				Campgrounds aGround = mapRowToGrounds(returned); //Campground object that accesses our mapRowToGrounds method, filling in the column information for each row
+				groundsId.add(aGround);//Adding the campground rows into our List
 			}
-			return groundsId;
+			return groundsId;//When no more campgrounds with that parkId exist, return the list of campgrounds
 	}
 
 	/* (non-Javadoc)
@@ -98,10 +99,11 @@ public class JDBCCampgroundsDAO implements CampgroundsDAO {
 
 	
 	
-	private Campgrounds mapRowToGrounds(SqlRowSet returned) {
+	private Campgrounds mapRowToGrounds(SqlRowSet returned) { //Method that feeds our SqlRowSet information into a Campground object
 		
-		Campgrounds aCampground = new Campgrounds();
+		Campgrounds aCampground = new Campgrounds();//Declare an instantiate campground object
 		
+		//Use associated setters to set values based on the information passed from our SqlRowSet, each column in table has a corresponding setter
 		aCampground.setCampground_id(returned.getInt("campground_id"));
 		aCampground.setPark_id(returned.getInt("park_id"));
 		aCampground.setName(returned.getString("name"));
