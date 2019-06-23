@@ -159,7 +159,7 @@ public class CampgroundCLI {
 					
 					
 					List<Site> reservation2 = siteDAO.makeAReservation(siteId, arrivalDate, departDate); 
-					Site[] reservations3 = new Site [reservation2.size()];
+				Site[] reservations3 = new Site [reservation2.size()];
 					
 					System.out.println("Here are the top 5 available sites for reservation: ");
 
@@ -208,10 +208,9 @@ public class CampgroundCLI {
 						int diffDays = (int)(difference/(24 * 60 * 60 * 1000));//Casting the long to an int doing the math to make it the difference in days
 						System.out.println("The difference between those 2 days is: " + diffDays);
 						
-						
-						
 						int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1);
 					
+						
 					
 					
 	

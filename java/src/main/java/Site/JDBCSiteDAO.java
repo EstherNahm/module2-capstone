@@ -70,15 +70,9 @@ public List<Site> makeAReservation(int siteId, Date fromDate, Date toDate) { //M
 		List<Site> allReservations = new ArrayList<Site>();	//Declaring and instantiating new  Site array list
 		
 		// Sql search statement
-		String sqlSearchReservations = "SELECT * " +
-				"FROM site " +
-				"WHERE site.site_id NOT IN (SELECT site_id from reservation) " +
-				"AND site.campground_id = ? " +
-				"AND site.site_id NOT IN (select site_id from reservation where " +
-				"reservation.from_date NOT between ? and ? " +
-				"AND reservation.to_date NOT between ? and ?) limit 5 ";
+		String sqlSearchReservations = "SELECT * FROM site WHERE site.site_id NOT IN (SELECT site_id from reservation where reservation.from_date between ? and ? or reservation.to_date between ? and ? or from_date < ? and to_date > ?) AND site.campground_id = ? limit 5";
 		
-		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchReservations, siteId, fromDate, toDate, fromDate, toDate); //SqlRowSet object that inserts our passed in information into our SQL search
+		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchReservations, fromDate, toDate, fromDate, toDate, fromDate, toDate, siteId); //SqlRowSet object that inserts our passed in information into our SQL search
 		
 		while(returned.next()) {//Loop through as long as their is another item matching the search criteria
 			Site reservation = mapRowToSite(returned); //Putting info from our SqlRowSet into our mapRow method into a site object containing a complete site
