@@ -3,7 +3,7 @@ package Site;
 import java.sql.Date;
 import java.util.List;
 
-import Campgrounds.Campgrounds;
+
 
 public interface SiteDAO {
 	public List<Site> getAllSites(int siteNumber);

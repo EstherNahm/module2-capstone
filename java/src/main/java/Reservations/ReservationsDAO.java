@@ -18,5 +18,7 @@ public interface ReservationsDAO {
 	//public List<Reservations> makeReservation(int siteId, String name, Date fromDate, Date toDate);
 	//public void makeReservation(int siteId, String name, Date fromDate, Date toDate);
 	public int makeReservation(int siteId, String name, Date fromDate, Date toDate);
+
+	public double costOfReservation(int campground);
 	
 }

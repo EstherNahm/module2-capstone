@@ -1,7 +1,6 @@
 package com.techelevator;
 
 import java.sql.Date;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Scanner;
 
@@ -167,6 +166,19 @@ public class CampgroundCLI {
 					for (int i = 0; i < reservation2.size(); i++) {
 						System.out.println(reservation2.get(i).toString());
 					}
+					
+					
+				
+//					
+//					long difference1 = departDate.getTime()-arrivalDate.getTime(); //Declaring and instantiating an object that subtracts dates entered
+//					int diffDays1 = (int)(difference1/(24 * 60 * 60 * 1000));//Casting the long to an int doing the math to make it the difference in days
+//					System.out.println("The duration of your stay will cost " + (diffDays1  ));
+//					
+					
+					
+					
+					
+					
 						
 			
 				case MAKE_RESERVATION:
@@ -176,30 +188,44 @@ public class CampgroundCLI {
 					String yesNo = myKeyboard2.nextLine(); //Variable to hold user selection
 					
 					
-					System.out.println("Enter the site ID you'd like to reserve.");
-					String id1 = myKeyboard2.nextLine(); //Variable to hold user selection
-					int siteId1 = Integer.parseInt(id1);//Parsing user selection from String to int
-					System.out.println("What name would you like on the reservation?");
-					String name = myKeyboard2.nextLine();//Variable to hold the user input for name of reservation
-					System.out.println("What is your arrival date? (YYYY-MM-DD)");
-					Date arrivalDate1 = Date.valueOf(myKeyboard2.nextLine());//Date variable to hold user input as from date
-					System.out.println("What is your departure date? (YYYY-MM-DD)");
-					Date departDate1 = Date.valueOf(myKeyboard2.nextLine());//Date variable to hold user input as to date
-					
-					
-					long difference = departDate1.getTime()-arrivalDate1.getTime(); //Declaring and instantiating an object that subtracts dates entered
-					int diffDays = (int)(difference/(24 * 60 * 60 * 1000));//Casting the long to an int doing the math to make it the difference in days
-					System.out.println("The difference between those 2 days is: " + diffDays);
-					
-			
-					
-					
-					if (yesNo.equals("N")) {
+
+					if (yesNo.equalsIgnoreCase("N")) {
 						endMethodProcessing();
-					} else {
+					} else if (yesNo.equalsIgnoreCase("Y")) { 
+
+						System.out.println("Enter the site ID you'd like to reserve.");
+						String id1 = myKeyboard2.nextLine(); //Variable to hold user selection
+						int siteId1 = Integer.parseInt(id1);//Parsing user selection from String to int
+						System.out.println("What name would you like on the reservation?");
+						String name = myKeyboard2.nextLine();//Variable to hold the user input for name of reservation
+						System.out.println("What is your arrival date? (YYYY-MM-DD)");
+						Date arrivalDate1 = Date.valueOf(myKeyboard2.nextLine());//Date variable to hold user input as from date
+						System.out.println("What is your departure date? (YYYY-MM-DD)");
+						Date departDate1 = Date.valueOf(myKeyboard2.nextLine());//Date variable to hold user input as to date
 						
 						
-						int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1); //Variable that holds users input for Site Id, name, arrival and departure dates
+						long difference = departDate1.getTime()-arrivalDate1.getTime(); //Declaring and instantiating an object that subtracts dates entered
+						int diffDays = (int)(difference/(24 * 60 * 60 * 1000));//Casting the long to an int doing the math to make it the difference in days
+						System.out.println("The difference between those 2 days is: " + diffDays);
+						
+						
+						
+						int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1);
+					
+					
+					
+	
+					
+					
+					
+					//System.out.println("The cost of your stay is: " + (dailyFee * diffDays));
+					
+					
+					//System.out.println("The cost of your stay will be: "  ); 
+		
+					
+					
+					 //Variable that holds users input for Site Id, name, arrival and departure dates
 						
 //						//String[] reserve1 = new String [reserve.size()];
 //					

@@ -1,5 +1,6 @@
 package Campgrounds;
 
+import java.sql.Date;
 import java.util.List;
 
 import Reservations.Reservations;
@@ -14,5 +15,8 @@ public interface CampgroundsDAO {
 	public void delete(String campName);
 	public Campgrounds isAvailable(Boolean isAvailable);
 	List<Reservations> searchByReservationId(int reservationId);
+
+
+	
 	
 }

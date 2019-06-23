@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.rowset.*;
 
+import Campgrounds.SiteWithFee;
 import Reservations.Reservations;
 
 public class JDBCSiteDAO implements SiteDAO{
@@ -87,7 +88,7 @@ public List<Site> makeAReservation(int siteId, Date fromDate, Date toDate) { //M
 		return allReservations; //Returning the list of sites
 
 	}
-	
+
 private Site mapRowToSite(SqlRowSet returned) {
 
 		Site aSite = new Site();

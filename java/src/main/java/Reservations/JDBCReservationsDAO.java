@@ -61,6 +61,7 @@ public int makeReservation(int siteId, String name, Date fromDate, Date toDate) 
 		
 	}
 
+
 	
 	/* (non-Javadoc)
 	 * @see Reservations.ReservationsDAO#save(java.lang.String)
@@ -124,6 +125,15 @@ public int makeReservation(int siteId, String name, Date fromDate, Date toDate) 
 	public List<Reservations> makeAReservation(int siteId, Date fromDate, Date toDate) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+
+
+	@Override
+	public double costOfReservation(int campground) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 
