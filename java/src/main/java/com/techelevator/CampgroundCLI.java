@@ -1,6 +1,7 @@
 package com.techelevator;
 
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Scanner;
 
@@ -174,18 +175,30 @@ public class CampgroundCLI {
 					Scanner myKeyboard2 = new Scanner(System.in);
 					System.out.println("Would you like to make a reservation? (Y) or (N)");
 					String yesNo = myKeyboard2.nextLine();
+					
+					
+					System.out.println("Enter the site ID you'd like to reserve.");
+					String id1 = myKeyboard2.nextLine();
+					int siteId1 = Integer.parseInt(id1);
+					System.out.println("What name would you like on the reservation?");
+					String name = myKeyboard2.nextLine();
+					System.out.println("What is your arrival date? (YYYY-MM-DD)");
+					Date arrivalDate1 = Date.valueOf(myKeyboard2.nextLine());
+					System.out.println("What is your departure date? (YYYY-MM-DD)");
+					Date departDate1 = Date.valueOf(myKeyboard2.nextLine());
+					
+					
+					long difference = departDate1.getTime()-arrivalDate1.getTime();
+					int diffDays = (int)(difference/(24 * 60 * 60 * 1000));
+					System.out.println("The difference between those 2 days is: " + diffDays);
+					
+			
+					
+					
 					if (yesNo.equals("N")) {
 						endMethodProcessing();
 					} else {
-						System.out.println("Enter the site ID you'd like to reserve.");
-						String id1 = myKeyboard2.nextLine();
-						int siteId1 = Integer.parseInt(id1);
-						System.out.println("What name would you like on the reservation?");
-						String name = myKeyboard2.nextLine();
-						System.out.println("What is your arrival date? (YYYY-MM-DD)");
-						Date arrivalDate1 = Date.valueOf(myKeyboard2.nextLine());
-						System.out.println("What is your departure date? (YYYY-MM-DD)");
-						Date departDate1 = Date.valueOf(myKeyboard2.nextLine());
+						
 						
 						int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1);
 						

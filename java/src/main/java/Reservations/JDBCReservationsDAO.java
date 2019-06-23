@@ -15,9 +15,6 @@ import org.springframework.jdbc.support.rowset.*;
 import Site.Site;
 
 
-
-
-
 public class JDBCReservationsDAO implements ReservationsDAO {
 	
 	private JdbcTemplate jdbcTemplate;
