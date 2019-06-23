@@ -230,13 +230,18 @@ public class CampgroundCLI {
 						System.out.println("The daily fee for this campsite is: ");
 						for(Campgrounds price: fee) {
 							System.out.println(fee1[nums2] = price.getDaily_fee());
+							int fee3 = Integer.parseInt(fee1);
+							System.out.println(fee1[nums2] * diffDays + "Total Fee");
+							
+							
+						
 						}
 						
 						
-						System.out.println("To continue your booking, please enter in the above daily fee: ");
-						String cost = myKeyboard2.nextLine(); //Variable to hold user selection
-						int cost1 = Integer.parseInt(cost);
-						System.out.println("Your total reservation cost comes to : $" + (cost1 * diffDays));
+//						System.out.println("To continue your booking, please enter in the above daily fee: ");
+//						String cost = myKeyboard2.nextLine(); //Variable to hold user selection
+//						int cost1 = Integer.parseInt(cost);
+//						System.out.println("Your total reservation cost comes to : $" + (cost1 * diffDays));
 						
 
 						
