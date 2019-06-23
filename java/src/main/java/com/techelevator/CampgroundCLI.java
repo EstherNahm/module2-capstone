@@ -1,10 +1,11 @@
 package com.techelevator;
 
-import javax.sql.DataSource;
+import java.sql.Date;
+import java.util.List;
+import java.util.Scanner;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
-import com.techelevator.Menu;
+
 import Campgrounds.Campgrounds;
 import Campgrounds.CampgroundsDAO;
 import Campgrounds.JDBCCampgroundsDAO;
@@ -15,11 +16,8 @@ import Reservations.JDBCReservationsDAO;
 import Reservations.Reservations;
 import Reservations.ReservationsDAO;
 import Site.JDBCSiteDAO;
+import Site.Site;
 import Site.SiteDAO;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
 
 public class CampgroundCLI {
 
@@ -29,9 +27,11 @@ public class CampgroundCLI {
 	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_DISPLAY_PARKS, MAIN_MENU_OPTION_EXIT };
 
 	private static final String PARK_INFO_MENU = "View Campgrounds for this park";
-	private static final String RESERVATION_SEARCH = "Make a Reservation"; // will link to available reservation
+	private static final String RESERVATION_SEARCH = "Check Your Existing Reservation"; // will link to available reservation
+	private static final String SITE_SEARCH = "Check Available Sites";
+	private static final String MAKE_RESERVATION = "Make A Reservation";
 	private static final String PARK_INFO_RETURN = "Exit";
-	private static final String[] PARK_INFO_OPTIONS = { PARK_INFO_MENU, RESERVATION_SEARCH, PARK_INFO_RETURN };
+	private static final String[] PARK_INFO_OPTIONS = { PARK_INFO_MENU, RESERVATION_SEARCH, SITE_SEARCH,MAKE_RESERVATION, PARK_INFO_RETURN };
 
 	
 	
@@ -57,8 +57,9 @@ public class CampgroundCLI {
 		campgroundsDAO = new JDBCCampgroundsDAO(dataSource);
 		nationalparkDAO = new JDBCNationalParkDAO(dataSource);	
 		reservationsDAO = new JDBCReservationsDAO(dataSource);
-		
 		siteDAO = new JDBCSiteDAO(dataSource);
+		
+		//setSiteDAO(new JDBCSiteDAO(dataSource));
 	}
 	
 	// public CampgroundCLI(DataSource datasource) {
@@ -100,58 +101,113 @@ public class CampgroundCLI {
 						System.out.println("Select a command:");
 						
 						
-						
-						
-						
 						boolean shouldProcess1 = true;
 						while((shouldProcess1)) { 
 							String choice1 = (String)menu.getChoiceFromOptions(PARK_INFO_OPTIONS);
-							switch(choice1) {
-								case PARK_INFO_MENU:
-							List<Campgrounds> groundID = campgroundsDAO.getCampgroundById(parkInfo.get(0).getPark_id());
-									String[] campGround = new String [groundID.size() + 1];
-									int groundNum1 = 0;
-									for (Campgrounds ground: groundID) {
-										campGround[groundNum1] = ground.getName() + "  " + ground.getOpen_from_mm() + "  " + ground.getOpen_to_mm() + "  " + ground.getDaily_fee();
-										groundNum1++;
-									}
 							
+				switch(choice1) {
+					case PARK_INFO_MENU:
+			
+				List<Campgrounds> groundID = campgroundsDAO.getCampgroundById(parkInfo.get(0).getPark_id());
+						String[] campGround = new String [groundID.size() + 1];
+						int groundNum1 = 0;
+						for (Campgrounds ground: groundID) {
+								campGround[groundNum1] = ground.getCampground_id() + "   " + ground.getName() + "   " + ground.getOpen_from_mm() + "   " + ground.getOpen_to_mm() + "   $" + ground.getDaily_fee();
+								groundNum1++;
+							}
+							System.out.println();		
+							System.out.println("------------CAMPGROUND INFORMATION--------------");
+							System.out.println(" (ID, NAME, OPEN FROM(MONTH), OPEN UNTIL(MONTH), FEE(DAY)");
 							campGround[groundNum1] = "Return to previous screen to make a reservation";
 							choice1 = (String)menu.getChoiceFromOptions(campGround);
 							
 							
 							break;
 							
-							
-							case RESERVATION_SEARCH:
-								Scanner myKeyboard = new Scanner(System.in);
-								System.out.println("Which campground?");
-								String campground = myKeyboard.nextLine();
-								int campground1 = Integer.parseInt(campground);
-								System.out.println("What is the arrival date? Please enter in this format: YEAR-MM-DD");
-								String arrival = myKeyboard.nextLine();
-								String arrival1 = arrival;
-								System.out.println("What is the depature date? Please enter in this format: YEAR-MM-DD");
-								String departure = myKeyboard.nextLine();
-								String departure2 = departure;
-							List<Reservations> reservation = reservationsDAO.searchForReservation(departure, arrival, campground1);
-								String[] reservations1 = new String [reservation.size()];
-								int num = 0;
-								for (Reservations res : reservation) {
-									reservations1[num] = res.getReservationId() + " " + res.getSiteId() + " " + res.getFromDate() + " " + res.getToDate();
-									num++;
-								} 
-								
-								choice1 = (String)menu.getChoiceFromOptions(reservations1);
 					
-
-								break;
-								//if(value.equals())
+				case RESERVATION_SEARCH:
 								
+					Scanner myKeyboard = new Scanner(System.in);
+					System.out.println("What is your reservation ID?");
+					String reservation1 = myKeyboard.nextLine();
+					int reservationID = Integer.parseInt(reservation1); 
+					
+					List<Reservations> reservation = reservationsDAO.searchByReservationId(reservationID);
+					String[] reservations1 = new String [reservation.size() + 1];
 							
-							case PARK_INFO_RETURN:
-								endMethodProcessing();
-								break;
+							int num = 0;
+							for (Reservations res : reservation) {
+								reservations1[num] = res.getReservationId() + " " + res.getReservationName() + " " + res.getFromDate() + " " + res.getToDate();
+								num++;
+							}
+							
+							reservations1[num] = "Return to previous screen to make a reservation";
+							choice1 = (String)menu.getChoiceFromOptions(reservations1);
+				break;
+					
+				
+				case SITE_SEARCH:
+					
+					Scanner myKeyboard1 = new Scanner(System.in);
+					System.out.println("What is the ID of your desired campground?");
+					String id = myKeyboard1.nextLine();
+					int siteId = Integer.parseInt(id);
+					
+					System.out.println("What is your arrival date? (YYYY-MM-DD)");
+					Date arrivalDate = Date.valueOf(myKeyboard1.nextLine());
+					System.out.println("What is your departure date? (YYYY-MM-DD)");
+					Date departDate = Date.valueOf(myKeyboard1.nextLine());
+					
+					
+					List<Site> reservation2 = siteDAO.makeAReservation(siteId, arrivalDate, departDate);
+					Site[] reservations3 = new Site [reservation2.size()];
+					
+					System.out.println("Here are the top 5 available sites for reservation: ");
+
+					for (int i = 0; i < reservation2.size(); i++) {
+						System.out.println(reservation2.get(i).toString());
+					}
+						
+			
+				case MAKE_RESERVATION:
+					System.out.println();
+					Scanner myKeyboard2 = new Scanner(System.in);
+					System.out.println("Would you like to make a reservation? (Y) or (N)");
+					String yesNo = myKeyboard2.nextLine();
+					if (yesNo.equals("N")) {
+						endMethodProcessing();
+					} else {
+						System.out.println("Enter the site ID you'd like to reserve.");
+						String id1 = myKeyboard2.nextLine();
+						int siteId1 = Integer.parseInt(id1);
+						System.out.println("What name would you like on the reservation?");
+						String name = myKeyboard2.nextLine();
+						System.out.println("What is your arrival date? (YYYY-MM-DD)");
+						Date arrivalDate1 = Date.valueOf(myKeyboard2.nextLine());
+						System.out.println("What is your departure date? (YYYY-MM-DD)");
+						Date departDate1 = Date.valueOf(myKeyboard2.nextLine());
+						
+						int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1);
+						
+//						//String[] reserve1 = new String [reserve.size()];
+//					
+//						int number = 0;
+//						for (Reservations res : reserve) {
+//							reserve1[number] = res.getReservationName();
+//						
+						//}
+						System.out.println("The reservation has been made and the id is " + confirmed);
+					}
+					
+					
+					
+									
+									
+					break;	
+					
+				case PARK_INFO_RETURN:
+					endMethodProcessing();
+					break;
 							
 							}
 							
@@ -162,14 +218,16 @@ public class CampgroundCLI {
 							
 							
 						}
+						
+						break;  	
+							}
 					
-			break;  	
-				}
-		
 		
 	}			
 	return;
 	}
+		
+	
 	
 	// Call another method (runCampgroundMenu) once the user has made a "choice"
 					// 	- pass along the selected park
@@ -187,6 +245,14 @@ public class CampgroundCLI {
 
 	
 	public static void endMethodProcessing() {
-		System.out.println("Fuck off, Mate");
+		System.out.println("Goodbye!");
+	}
+
+	public SiteDAO getSiteDAO() {
+		return siteDAO;
+	}
+
+	public void setSiteDAO(SiteDAO siteDAO) {
+		this.siteDAO = siteDAO;
 	}
 }

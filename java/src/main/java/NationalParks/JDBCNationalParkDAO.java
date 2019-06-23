@@ -18,6 +18,7 @@ public class JDBCNationalParkDAO implements NationalParkDAO{
 	private JdbcTemplate jdbcTemplate;
 	
 	public JDBCNationalParkDAO(DataSource dataSource) {
+		
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	/* (non-Javadoc)
@@ -25,17 +26,18 @@ public class JDBCNationalParkDAO implements NationalParkDAO{
 	 */
 	@Override
 	public List<NationalPark> getAllParks() { 
+		
 		List<NationalPark> allParks = new ArrayList<NationalPark>();
 		
 		String sqlSearchParks = "SELECT * FROM park";
 		
 		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchParks);
 		
-		while(returned.next()) {
-			NationalPark aPark = mapRowToParks(returned);
-			allParks.add(aPark);
-		}
-		return allParks;
+			while(returned.next()) {
+				NationalPark aPark = mapRowToParks(returned);
+				allParks.add(aPark);
+			}
+			return allParks;
 	}
 
 	/* (non-Javadoc)
@@ -43,36 +45,21 @@ public class JDBCNationalParkDAO implements NationalParkDAO{
 	 */
 	@Override
 	public List<NationalPark> searchByPark(String name) {
+		
 		List<NationalPark> allParks = new ArrayList<NationalPark>();
+		
 		String sqlSearchParks = "SELECT * FROM park WHERE name = ?";
 		
 		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchParks, name);
 		
-		while(returned.next()) {
-			NationalPark aPark = mapRowToParks(returned);
-			allParks.add(aPark);
-		}
+			while(returned.next()) {
+				NationalPark aPark = mapRowToParks(returned);
+				allParks.add(aPark);
+			}
 		return allParks;
 	}
 	
 	
-//	public void showParkByName(String choice) {
-//		List<NationalPark> parkList = getAllParks();           // invoke method to display items in Vending Machine
-//		String[] parkNames = new String[parkList.size() + 1];
-//		int parkNum = 0;
-//		for(NationalPark aPark : parkList) {
-//			parkNames[parkNum] = aPark.getName();
-//			parkNum++;
-//		}
-//		parkNames[parkNum] = "Quit";
-//		choice = (String)parkMenu.getChoiceFromOptions(parkNames);
-//		System.out.println("Choice = " + choice);
-//		break;    
-//	}
-
-	/* (non-Javadoc)
-	 * @see NationalParks.NationalParkDAO#save(java.lang.String)
-	 */
 	@Override
 	public void save(String parkName) {
 		

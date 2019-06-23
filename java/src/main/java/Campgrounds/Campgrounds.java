@@ -2,20 +2,17 @@ package Campgrounds;
 
 public class Campgrounds {
 	
-	private int campground_id;
 	private int park_id;
+	private int campground_id;
 	private String name;
-	private String open_from_mm;
-	private String open_to_mm;
 	private String daily_fee;
+	private String open_to_mm;
+	private String open_from_mm;
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	@Override
-	public String toString() {
-		return "Campgrounds [campground_id=" + campground_id + ", park_id=" + park_id + ", name=" + name
-				+ ", open_from_mm=" + open_from_mm + ", open_to_mm=" + open_to_mm + ", daily_fee=" + daily_fee + "]";
-	}
+
 	/**
 	 * @return the campground_id
 	 */
@@ -87,6 +84,11 @@ public class Campgrounds {
 	 */
 	public void setDaily_fee(String daily_fee) {
 		this.daily_fee = daily_fee;
+	}
+	@Override
+	public String toString() {
+		return "Campgrounds [campground_id=" + campground_id + ", park_id=" + park_id + ", name=" + name
+				+ ", open_from_mm=" + open_from_mm + ", open_to_mm=" + open_to_mm + ", daily_fee=" + daily_fee + "]";
 	}
 
 

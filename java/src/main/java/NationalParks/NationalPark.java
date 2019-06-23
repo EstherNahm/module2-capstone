@@ -4,14 +4,14 @@ import java.sql.Date;
 
 public class NationalPark {
 	
-	
-	private int park_id;
 	private String name;
 	private String location;
+	private String description;
 	private Date establish_date;
+	private int park_id;
 	private int area;
 	private int visitors;
-	private String description;
+	
 	
 	/**
 	 * @return the park_id

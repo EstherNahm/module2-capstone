@@ -3,11 +3,11 @@ package Site;
 public class Site {
 	
 	private int site_id;
-	private int campground_id;
 	private int site_number;
+	private int campground_id;
 	private int max_occupancy;
-	private Boolean accessible;
 	private int max_rv_length;
+	private Boolean accessible;
 	private Boolean utilities;
 	/**
 	 * @return the site_id
@@ -98,9 +98,9 @@ public class Site {
 	 */
 	@Override
 	public String toString() {
-		return "Site [site_id=" + site_id + ", campground_id=" + campground_id + ", site_number=" + site_number
-				+ ", max_occupancy=" + max_occupancy + ", accessible=" + accessible + ", max_rv_length=" + max_rv_length
-				+ ", utilities=" + utilities + "]";
+		return "Site: " + site_id + "  campgroundID: " + campground_id + "  Site#: " + site_number
+				+ "  max_occupancy: " + max_occupancy + "  accessible: " + accessible + "  max length: " + max_rv_length
+				+ "  utilities: " + utilities;
 	}
 	
 	

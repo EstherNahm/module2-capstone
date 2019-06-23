@@ -1,11 +1,15 @@
 package Site;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.rowset.*;
+
+import Reservations.Reservations;
 
 public class JDBCSiteDAO implements SiteDAO{
 	
@@ -61,6 +65,40 @@ private JdbcTemplate jdbcTemplate;
 		
 	}
 	
-	
+public List<Site> makeAReservation(int siteId, Date fromDate, Date toDate) {
+		
+		List<Site> allReservations = new ArrayList<Site>();	
+		
+		String sqlSearchReservations = "SELECT * " +
+				"FROM site " +
+				"WHERE site.site_id NOT IN (SELECT site_id from reservation) " +
+				"AND site.campground_id = ? " +
+				"AND site.site_id NOT IN (select site_id from reservation where " +
+				"reservation.from_date NOT between ? and ? " +
+				"AND reservation.to_date NOT between ? and ?) limit 5 ";
+		
+		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchReservations, siteId, fromDate, toDate, fromDate, toDate);
+		
+		while(returned.next()) {
+			Site reservation = mapRowToSite(returned);
+			allReservations.add(reservation);
+		}
+		return allReservations;
 
+	}
+	
+private Site mapRowToSite(SqlRowSet returned) {
+
+		Site aSite = new Site();
+		
+		aSite.setSite_id(returned.getInt("site_id"));
+		aSite.setCampground_id(returned.getInt("campground_id"));
+		aSite.setSite_number(returned.getInt("site_number"));
+		aSite.setMax_occupancy(returned.getInt("max_occupancy"));
+		aSite.setAccessible(returned.getBoolean("accessible"));
+		aSite.setMax_rv_length(returned.getInt("max_rv_length"));
+		aSite.setUtilities(returned.getBoolean("utilities"));
+		
+		return aSite;
+}
 }

@@ -8,40 +8,46 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.rowset.*;
 
+import Reservations.Reservations;
+
 
 public class JDBCCampgroundsDAO implements CampgroundsDAO {
 
 	private JdbcTemplate jdbcTemplate;
 	
 	public JDBCCampgroundsDAO(DataSource dataSource) {
+		
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	@Override
 	public List<Campgrounds> getAllCampgrounds() {
+		
 		List<Campgrounds> allGrounds = new ArrayList<Campgrounds>();
 		
 		String sqlSearchGrounds = "SELECT * FROM campground";
 		
 		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchGrounds);
 		
-		while(returned.next()) {
-			Campgrounds aGround = mapRowToGrounds(returned);
-			allGrounds.add(aGround);
-		}
+			while(returned.next()) {
+				Campgrounds aGround = mapRowToGrounds(returned);
+				allGrounds.add(aGround);
+			}
 		return allGrounds;
 	}
 	
 	public List<Campgrounds> getCampgroundById(int parkId) {
+		
 		List<Campgrounds> groundsId = new ArrayList<Campgrounds>();
 		
 		String sqlSearchId = "SELECT * FROM campground JOIN park ON campground.park_id = park.park_id WHERE park.park_id = ?";
+		
 		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchId, parkId);
 
-		while(returned.next()) {
-			Campgrounds aGround = mapRowToGrounds(returned);
-			groundsId.add(aGround);
-		}
-		return groundsId;
+			while(returned.next()) {
+				Campgrounds aGround = mapRowToGrounds(returned);
+				groundsId.add(aGround);
+			}
+			return groundsId;
 	}
 
 	/* (non-Javadoc)
@@ -93,6 +99,7 @@ public class JDBCCampgroundsDAO implements CampgroundsDAO {
 	
 	
 	private Campgrounds mapRowToGrounds(SqlRowSet returned) {
+		
 		Campgrounds aCampground = new Campgrounds();
 		
 		aCampground.setCampground_id(returned.getInt("campground_id"));
@@ -103,6 +110,11 @@ public class JDBCCampgroundsDAO implements CampgroundsDAO {
 		aCampground.setDaily_fee(returned.getString("daily_fee"));
 		
 		return aCampground;
+	}
+	@Override
+	public List<Reservations> searchByReservationId(int reservationId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

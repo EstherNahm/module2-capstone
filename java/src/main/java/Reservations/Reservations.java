@@ -1,14 +1,15 @@
 package Reservations;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Reservations {
 	private int reservationId;
 	private int siteId;
 	private String reservationName;
-	private String fromDate;
-	private String toDate;
+	private Date fromDate;
+	private Date toDate;
 	private Date createDate;
 	
 	/**
@@ -50,25 +51,25 @@ public class Reservations {
 	/**
 	 * @return the fromDate
 	 */
-	public String getFromDate() {
+	public Date getFromDate() {
 		return fromDate;
 	}
 	/**
-	 * @param fromDate the fromDate to set
+	 * @param date the fromDate to set
 	 */
-	public void setFromDate(String fromDate) {
-		this.fromDate = fromDate;
+	public void setFromDate(Date date) {
+		this.fromDate = date;
 	}
 	/**
 	 * @return the toDate
 	 */
-	public String getToDate() {
+	public Date getToDate() {
 		return toDate;
 	}
 	/**
 	 * @param toDate the toDate to set
 	 */
-	public void setToDate(String toDate) {
+	public void setToDate(Date toDate) {
 		this.toDate = toDate;
 	}
 	/**
