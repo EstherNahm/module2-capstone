@@ -40,6 +40,7 @@ public class CampgroundCLI {
 	private NationalParkDAO nationalparkDAO;
 	private ReservationsDAO reservationsDAO;
 	private SiteDAO siteDAO;
+	private Campgrounds campgrounds = new Campgrounds();
 	
 	public static void main(String[] args) {
 		CampgroundCLI application = new CampgroundCLI();
@@ -217,7 +218,7 @@ public class CampgroundCLI {
 					
 					
 					
-					//System.out.println("The cost of your stay is: " + (dailyFee * diffDays));
+						System.out.println("The cost of your stay is: " + (campgrounds.getDaily_fee().diffDays));
 					
 					
 					//System.out.println("The cost of your stay will be: "  ); 
