@@ -193,7 +193,7 @@ public class CampgroundCLI {
 					if (yesNo.equalsIgnoreCase("N")) {
 						endMethodProcessing();
 					} else if (yesNo.equalsIgnoreCase("Y")) { 
-						System.out.println("Enter to campId you'd like to reserve.");
+						System.out.println("Enter the camp ID you'd like to reserve.");
 						String campId = myKeyboard2.nextLine();
 						int campId1 = Integer.parseInt(campId);
 						System.out.println("Enter the site ID you'd like to reserve.");
@@ -209,7 +209,7 @@ public class CampgroundCLI {
 						
 						long difference = departDate1.getTime()-arrivalDate1.getTime(); //Declaring and instantiating an object that subtracts dates entered
 						int diffDays = (int)(difference/(24 * 60 * 60 * 1000));//Casting the long to an int doing the math to make it the difference in days
-						System.out.println("The difference between those 2 days is: " + diffDays);
+						System.out.println("The length of your desired days comes to: " + diffDays);
 						
 						//int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1);
 						
@@ -233,15 +233,13 @@ public class CampgroundCLI {
 						}
 						
 						
-						
+						System.out.println("To continue your booking, please enter in the above daily fee: ");
+						String cost = myKeyboard2.nextLine(); //Variable to hold user selection
+						int cost1 = Integer.parseInt(cost);
+						System.out.println("Your total reservation cost comes to : $" + (cost1 * diffDays));
 						
 
 						
-						
-//						int num2 = 0;
-//						for (Campgrounds price: fee) {
-//							fee1[num2] = price.getDaily_fee();
-//						}
 ////						
 						
 //						List<Reservations> reservation = reservationsDAO.searchByReservationId(reservationID);//List containing all reservations based on reservation Id using our method
