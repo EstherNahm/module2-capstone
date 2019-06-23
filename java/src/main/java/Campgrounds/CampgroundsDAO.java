@@ -15,7 +15,7 @@ public interface CampgroundsDAO {
 	public void delete(String campName);
 	public Campgrounds isAvailable(Boolean isAvailable);
 	List<Reservations> searchByReservationId(int reservationId);
-
+	public List <Campgrounds> getCampgroundFee(int campground, int site);
 
 	
 	

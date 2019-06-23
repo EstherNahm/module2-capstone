@@ -40,7 +40,7 @@ public class CampgroundCLI {
 	private NationalParkDAO nationalparkDAO;
 	private ReservationsDAO reservationsDAO;
 	private SiteDAO siteDAO;
-	private Campgrounds campgrounds = new Campgrounds();
+	
 	
 	public static void main(String[] args) {
 		CampgroundCLI application = new CampgroundCLI();
@@ -193,7 +193,9 @@ public class CampgroundCLI {
 					if (yesNo.equalsIgnoreCase("N")) {
 						endMethodProcessing();
 					} else if (yesNo.equalsIgnoreCase("Y")) { 
-
+						System.out.println("Enter to campId you'd like to reserve.");
+						String campId = myKeyboard2.nextLine();
+						int campId1 = Integer.parseInt(campId);
 						System.out.println("Enter the site ID you'd like to reserve.");
 						String id1 = myKeyboard2.nextLine(); //Variable to hold user selection
 						int siteId1 = Integer.parseInt(id1);//Parsing user selection from String to int
@@ -209,16 +211,52 @@ public class CampgroundCLI {
 						int diffDays = (int)(difference/(24 * 60 * 60 * 1000));//Casting the long to an int doing the math to make it the difference in days
 						System.out.println("The difference between those 2 days is: " + diffDays);
 						
-						int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1);
-					
+						//int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1);
 						
+//						List<Site> reservation2 = siteDAO.makeAReservation(siteId, arrivalDate, departDate); 
+//						Site[] reservations3 = new Site [reservation2.size()];
+//							
+//							System.out.println("Here are the top 5 available sites for reservation: ");
+//
+//							for (int i = 0; i < reservation2.size(); i++) {
+//								System.out.println(reservation2.get(i).toString());
+//							}
+							
+					
+						List <Campgrounds> fee = campgroundsDAO.getCampgroundFee(campId1, siteId1);
+						String [] fee1 = new String [fee.size()];
+						
+						int nums2 = 0;
+						System.out.println("The daily fee for this campsite is: ");
+						for(Campgrounds price: fee) {
+							System.out.println(fee1[nums2] = price.getDaily_fee());
+						}
+						
+						
+						
+						
+
+						
+						
+//						int num2 = 0;
+//						for (Campgrounds price: fee) {
+//							fee1[num2] = price.getDaily_fee();
+//						}
+////						
+						
+//						List<Reservations> reservation = reservationsDAO.searchByReservationId(reservationID);//List containing all reservations based on reservation Id using our method
+//						String[] reservations1 = new String [reservation.size() + 1]; //Declaring and Instantiating string to hold reservation info from list
+//								
+//								int num = 0; //loop variable
+//								for (Reservations res : reservation) {//for loop
+//									reservations1[num] = res.getReservationId() + " " + res.getReservationName() + " " + res.getFromDate() + " " + res.getToDate();
+//									//Adds the information from the List to our String[] containing reservation ID, Name, From Date, To date
+//									num++;//Update loop variable
+//								}
+//					
 					
 					
-	
-					
-					
-					
-						System.out.println("The cost of your stay is: " + (campgrounds.getDaily_fee().diffDays));
+						//System.out.println("The cost of your stay is: " + (campgrounds.getDaily_fee().diffDays));
 					
 					
 					//System.out.println("The cost of your stay will be: "  ); 
@@ -234,7 +272,7 @@ public class CampgroundCLI {
 //							reserve1[number] = res.getReservationName();
 //						
 						//}
-						System.out.println("The reservation has been made and the id is " + confirmed); //Print line the confirms reservation
+						//System.out.println("The reservation has been made and the id is " + confirmed); //Print line the confirms reservation
 					}
 					
 					

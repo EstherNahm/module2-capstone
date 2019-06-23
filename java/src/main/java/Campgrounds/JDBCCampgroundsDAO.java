@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.rowset.*;
 
 import Reservations.Reservations;
+import Site.Site;
 
 
 public class JDBCCampgroundsDAO implements CampgroundsDAO {
@@ -50,6 +51,22 @@ public class JDBCCampgroundsDAO implements CampgroundsDAO {
 			}
 			return groundsId;//When no more campgrounds with that parkId exist, return the list of campgrounds
 	}
+	
+	public List <Campgrounds> getCampgroundFee(int campground, int site) {
+		List<Campgrounds> fee = new ArrayList<Campgrounds>();
+		String sqlGetFee = "select * from campground "
+				+ "inner join site on campground.campground_id = site.campground_id "
+				+ "and campground.campground_id = ? and site.site_number = ?";
+		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlGetFee, campground, site);
+		while(returned.next()) {
+			Campgrounds fee1 = mapRowToGrounds(returned);
+			fee.add(fee1);
+		}
+		return fee;
+	}
+	
+	
+	
 
 	/* (non-Javadoc)
 	 * @see Campgrounds.CampgroundsDAO#searchByCampgrounds(java.lang.String)
@@ -112,6 +129,8 @@ public class JDBCCampgroundsDAO implements CampgroundsDAO {
 		aCampground.setOpen_from_mm(returned.getString("open_from_mm"));
 		aCampground.setOpen_to_mm(returned.getString("open_to_mm"));
 		aCampground.setDaily_fee(returned.getString("daily_fee"));
+		
+		
 		
 		return aCampground;
 	}
