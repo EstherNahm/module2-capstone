@@ -151,7 +151,9 @@ public class CampgroundCLI {
 						break;
 
 					case SITE_SEARCH:
-
+						
+						
+						
 						Scanner myKeyboard1 = new Scanner(System.in); // new scanner object to read user input
 
 						System.out.println("What is the camp ID you'd like to check?");
@@ -173,6 +175,8 @@ public class CampgroundCLI {
 						for (int i = 0; i < reservation2.size(); i++) {
 							System.out.println(reservation2.get(i).toString());
 						}
+						
+						
 
 					case MAKE_RESERVATION:
 						System.out.println();
@@ -242,6 +246,8 @@ public class CampgroundCLI {
 	public static void endMethodProcessing() {
 		System.out.println("It's been real. Goodbye!");
 	}
+	
+
 	
 	private void displayPrettyPicture() {
 System.out.println();
