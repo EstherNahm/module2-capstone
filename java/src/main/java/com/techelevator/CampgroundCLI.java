@@ -211,11 +211,10 @@ public class CampgroundCLI {
 						int diffDays = (int)(difference/(24 * 60 * 60 * 1000));//Casting the long to an int doing the math to make it the difference in days
 						System.out.println("The length of your desired stay comes to: " + diffDays + " days");
 						
-						//int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1);
-						
+//						int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1);
+//						
 //						List<Site> reservation2 = siteDAO.makeAReservation(siteId, arrivalDate, departDate); 
-//						Site[] reservations3 = new Site [reservation2.size()];
-//							
+//						Site[] reservations3 = new Site [reservation2.size()];							
 //							System.out.println("Here are the top 5 available sites for reservation: ");
 //
 //							for (int i = 0; i < reservation2.size(); i++) {
@@ -234,6 +233,7 @@ public class CampgroundCLI {
 							double yes = Double.parseDouble(Y);
 							double total = (yes * diffDays);
 							System.out.println("$" + total + " is the Total Fee");
+							System.out.println("I dont know how to add the reservation # here. It was working earlier. Sorry Esther :(");
 //							int fee3 = Integer.parseInt(s)(fee1);
 //							System.out.println(fee1[nums2].valueOf(fee1[nums2]) + "Total Fee");
 //							int totalFee = 

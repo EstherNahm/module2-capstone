@@ -99,7 +99,7 @@ public class Site {
 	@Override
 	public String toString() {
 		return "Site: " + site_id + "  campgroundID: " + campground_id + "  Site#: " + site_number
-				+ "  max_occupancy: " + max_occupancy + "  accessible: " + accessible + "  max length: " + max_rv_length
+				+ "  max_occupancy: " + max_occupancy + "  Handicap accessible: " + accessible + "  max length: " + max_rv_length
 				+ "  utilities: " + utilities;
 	}
 	
