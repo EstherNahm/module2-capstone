@@ -1,6 +1,7 @@
 package com.techelevator;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -196,14 +197,28 @@ public class CampgroundCLI {
 							System.out.println("What name would you like on the reservation?");
 							String name = myKeyboard2.nextLine();
 							System.out.println("What is your arrival date? (YYYY-MM-DD)");
-							Date arrivalDate1 = Date.valueOf(myKeyboard2.nextLine()); // user's from_date
+							String date1 = myKeyboard2.nextLine();
+							String date10 = date1.substring(5, 7);
+							
+							
+							int dateArr = Integer.parseInt(date10);
+							
+							
+							if (dateArr < 5) {
+								System.out.println("this worked!");
+							}
+							
+							Date arrivalDate1 = Date.valueOf(date1); // user's from_date
 							System.out.println("What is your departure date? (YYYY-MM-DD)");
 							Date departDate1 = Date.valueOf(myKeyboard2.nextLine()); // user's to_date
+							
 
 							long difference = departDate1.getTime() - arrivalDate1.getTime();
 							int diffDays = (int) (difference / (24 * 60 * 60 * 1000)); // converting difference through
 																						// milliseconds
-
+							
+						
+							
 							System.out.println("The length of your desired stay comes to " + diffDays + " days.");
 							System.out.println();
 
@@ -229,6 +244,7 @@ public class CampgroundCLI {
 								
 							}
 						}
+						
 
 						break;
 
