@@ -209,7 +209,7 @@ public class CampgroundCLI {
 						
 						long difference = departDate1.getTime()-arrivalDate1.getTime(); //Declaring and instantiating an object that subtracts dates entered
 						int diffDays = (int)(difference/(24 * 60 * 60 * 1000));//Casting the long to an int doing the math to make it the difference in days
-						System.out.println("The length of your desired stay comes to: " + diffDays + "days");
+						System.out.println("The length of your desired stay comes to: " + diffDays + " days");
 						
 						//int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1);
 						
