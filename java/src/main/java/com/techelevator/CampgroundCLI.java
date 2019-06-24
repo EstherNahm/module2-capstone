@@ -209,7 +209,7 @@ public class CampgroundCLI {
 						
 						long difference = departDate1.getTime()-arrivalDate1.getTime(); //Declaring and instantiating an object that subtracts dates entered
 						int diffDays = (int)(difference/(24 * 60 * 60 * 1000));//Casting the long to an int doing the math to make it the difference in days
-						System.out.println("The length of your desired days comes to: " + diffDays);
+						System.out.println("The length of your desired stay comes to: " + diffDays + "days");
 						
 						//int confirmed = reservationsDAO.makeReservation(siteId1, name, arrivalDate1, departDate1);
 						
@@ -227,11 +227,16 @@ public class CampgroundCLI {
 						String [] fee1 = new String [fee.size()];
 						
 						int nums2 = 0;
-						System.out.println("The daily fee for this campsite is: ");
+//						System.out.println("The daily fee for this campsite is: ");
 						for(Campgrounds price: fee) {
-							System.out.println(fee1[nums2] = price.getDaily_fee());
-							int fee3 = Integer.parseInt(fee1);
-							System.out.println(fee1[nums2] * diffDays + "Total Fee");
+							System.out.println("$"+(fee1[nums2] = price.getDaily_fee() + " is the Daily Fee"));
+							String Y = price.getDaily_fee().toString();
+							double yes = Double.parseDouble(Y);
+							double total = (yes * diffDays);
+							System.out.println("$" + total + " is the Total Fee");
+//							int fee3 = Integer.parseInt(s)(fee1);
+//							System.out.println(fee1[nums2].valueOf(fee1[nums2]) + "Total Fee");
+//							int totalFee = 
 							
 							
 						
