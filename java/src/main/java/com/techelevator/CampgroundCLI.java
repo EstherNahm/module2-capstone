@@ -156,34 +156,37 @@ public class CampgroundCLI {
 						
 						
 						Scanner myKeyboard1 = new Scanner(System.in); // new scanner object to read user input
-
 						System.out.println("What is the camp ID you'd like to check?");
+						
 						String id = myKeyboard1.nextLine(); // Variable to hold user input
 						int siteId = Integer.parseInt(id); // Parsing user's input from string to int
 
 						System.out.println("What is your arrival date? (YYYY-MM-DD)");
-						String ugh = myKeyboard1.nextLine();
-						String date10 = ugh.substring(5, 7);
+						String aDate = myKeyboard1.nextLine();
+						String date10 = aDate.substring(5, 7);
 						int dateArr = Integer.parseInt(date10);
 						
 						
 						System.out.println("What is your departure date? (YYYY-MM-DD)");
-						String ugh1 = myKeyboard1.nextLine();
-						String date11 = ugh1.substring(5, 7);
+						String dDate = myKeyboard1.nextLine();
+						String date11 = dDate.substring(5, 7);
 						int dateArr1 = Integer.parseInt(date11);
 						
 							
 						
 						if ((siteId == 2) && ((dateArr < 5) || (dateArr1 > 9))) {
-								System.out.println("There aren't any available sites for these dates. Please try another date!");
+							System.out.println("There aren't any available sites for these dates. Please try another date!");
+								break;
 						} if ((siteId == 3) && ((dateArr < 5) || (dateArr1 > 10))) {
-							System.out.println("TThere aren't any available sites for these dates. Please try another date!");
+							System.out.println("There aren't any available sites for these dates. Please try another date!");
+							break;
 						} if ((siteId == 7) && ((dateArr < 5) || (dateArr1 > 11))) {
-							System.out.println("TThere aren't any available sites for these dates. Please try another date!");
+							System.out.println("There aren't any available sites for these dates. Please try another date!");
+							break;
 						} else {
 							
-						Date arrivalDate = Date.valueOf(ugh);
-						Date departDate = Date.valueOf(ugh1);
+						Date arrivalDate = Date.valueOf(aDate);
+						Date departDate = Date.valueOf(dDate);
 
 						List<Site> reservation2 = siteDAO.sitesAvailable(siteId, arrivalDate, departDate);
 						System.out.println();
@@ -195,6 +198,7 @@ public class CampgroundCLI {
 						for (int i = 0; i < reservation2.size(); i++) {
 							System.out.println(reservation2.get(i).toString());
 						}
+						
 						}
 
 					case MAKE_RESERVATION:
@@ -216,16 +220,7 @@ public class CampgroundCLI {
 							String name = myKeyboard2.nextLine();
 							System.out.println("What is your arrival date? (YYYY-MM-DD)");
 							String date1 = myKeyboard2.nextLine();
-							
-//							String date10 = date1.substring(5, 7);
-//							
-//							
-//							int dateArr = Integer.parseInt(date10);
-//							
-//							
-//							if (dateArr < 5) {
-//								System.out.println("this worked!");
-//							}
+				
 							
 							Date arrivalDate1 = Date.valueOf(date1); // user's from_date
 							System.out.println("What is your departure date? (YYYY-MM-DD)");
