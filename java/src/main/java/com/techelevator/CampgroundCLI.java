@@ -180,13 +180,10 @@ public class CampgroundCLI {
 							System.out.println("TThere aren't any available sites for these dates. Please try another date!");
 						} if ((siteId == 7) && ((dateArr < 5) || (dateArr1 > 11))) {
 							System.out.println("TThere aren't any available sites for these dates. Please try another date!");
-						}
-						
-						
-						
-						
-							Date arrivalDate = Date.valueOf(ugh);
-							Date departDate = Date.valueOf(ugh1);
+						} else {
+							
+						Date arrivalDate = Date.valueOf(ugh);
+						Date departDate = Date.valueOf(ugh1);
 
 						List<Site> reservation2 = siteDAO.sitesAvailable(siteId, arrivalDate, departDate);
 						System.out.println();
@@ -198,8 +195,7 @@ public class CampgroundCLI {
 						for (int i = 0; i < reservation2.size(); i++) {
 							System.out.println(reservation2.get(i).toString());
 						}
-						
-						
+						}
 
 					case MAKE_RESERVATION:
 						System.out.println();
