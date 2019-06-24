@@ -3,17 +3,13 @@ package Site;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.sql.DataSource;
-
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.rowset.*;
 
-import Reservations.Reservations;
 
-public class JDBCSiteDAO implements SiteDAO{
+public class JDBCSiteDAO implements SiteDAO {
 	
-
 private JdbcTemplate jdbcTemplate;
 	
 	public JDBCSiteDAO(DataSource dataSource) {
@@ -65,12 +61,12 @@ private JdbcTemplate jdbcTemplate;
 		
 	}
 	
-public List<Site> makeAReservation(int siteId, Date fromDate, Date toDate) { //Method to make a reservation
-		
+public List<Site> sitesAvailable (int siteId, Date fromDate, Date toDate) { //method to search a reservation
+	
 		List<Site> allReservations = new ArrayList<Site>();	//Declaring and instantiating new  Site array list
 		
-		// Sql search statement
-		String sqlSearchReservations = "SELECT * FROM site WHERE site.site_id NOT IN (SELECT site_id from reservation where reservation.from_date between ? and ? or reservation.to_date between ? and ? or from_date < ? and to_date > ?) AND site.campground_id = ? limit 5";
+		String sqlSearchReservations = "SELECT * FROM site WHERE site.site_id "
+				+ "NOT IN (SELECT site_id FROM reservation WHERE reservation.from_date BETWEEN ? AND ? OR reservation.to_date BETWEEN ? AND ? OR from_date < ? AND to_date > ?) AND site.campground_id = ? limit 5";
 		
 		SqlRowSet returned = jdbcTemplate.queryForRowSet(sqlSearchReservations, fromDate, toDate, fromDate, toDate, fromDate, toDate, siteId); //SqlRowSet object that inserts our passed in information into our SQL search
 		
