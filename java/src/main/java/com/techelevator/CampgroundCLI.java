@@ -255,12 +255,16 @@ public class CampgroundCLI {
 				}
 				break;
 			}
+			endMethodProcessing();
+			shouldProcess = false;
 		}
-		return;
+		
 	}
 
 	public static void endMethodProcessing() {
+		
 		System.out.println("It's been real. Goodbye!");
+		
 	}
 	
 
