@@ -1,7 +1,6 @@
 package com.techelevator;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -153,19 +152,39 @@ public class CampgroundCLI {
 
 					case SITE_SEARCH:
 						
-						
-						
 						Scanner myKeyboard1 = new Scanner(System.in); // new scanner object to read user input
-
 						System.out.println("What is the camp ID you'd like to check?");
+						
 						String id = myKeyboard1.nextLine(); // Variable to hold user input
 						int siteId = Integer.parseInt(id); // Parsing user's input from string to int
 
 						System.out.println("What is your arrival date? (YYYY-MM-DD)");
-						Date arrivalDate = Date.valueOf(myKeyboard1.nextLine());
+						String aDate = myKeyboard1.nextLine();
+						String date10 = aDate.substring(5, 7);
+						int dateArr = Integer.parseInt(date10);	
+						
 						System.out.println("What is your departure date? (YYYY-MM-DD)");
-						Date departDate = Date.valueOf(myKeyboard1.nextLine());
-
+						String dDate = myKeyboard1.nextLine();
+						String date11 = dDate.substring(5, 7);
+						int dateArr1 = Integer.parseInt(date11);
+					
+						Date arrivalDate = Date.valueOf(aDate);
+						Date departDate = Date.valueOf(dDate);
+						
+						if ((siteId == 2) && ((dateArr < 5) || (dateArr1 > 9))) {
+							System.out.println("There aren't any available sites for these dates. Please try another date!");
+								break;
+						} if ((siteId == 3) && ((dateArr < 5) || (dateArr1 > 10))) {
+							System.out.println("There aren't any available sites for these dates. Please try another date!");
+							break;
+						} if ((siteId == 7) && ((dateArr < 5) || (dateArr1 > 11))) {
+							System.out.println("There aren't any available sites for these dates. Please try another date!");
+							break;
+						} if (arrivalDate.after(departDate)) { 
+							System.out.println("That is an invalid date entry. Please try another date!"); 
+							break;
+						} else {
+				
 						List<Site> reservation2 = siteDAO.sitesAvailable(siteId, arrivalDate, departDate);
 						System.out.println();
 						
@@ -176,8 +195,7 @@ public class CampgroundCLI {
 						for (int i = 0; i < reservation2.size(); i++) {
 							System.out.println(reservation2.get(i).toString());
 						}
-						
-						
+					}
 
 					case MAKE_RESERVATION:
 						System.out.println();
@@ -198,15 +216,7 @@ public class CampgroundCLI {
 							String name = myKeyboard2.nextLine();
 							System.out.println("What is your arrival date? (YYYY-MM-DD)");
 							String date1 = myKeyboard2.nextLine();
-							String date10 = date1.substring(5, 7);
-							
-							
-							int dateArr = Integer.parseInt(date10);
-							
-							
-							if (dateArr < 5) {
-								System.out.println("this worked!");
-							}
+				
 							
 							Date arrivalDate1 = Date.valueOf(date1); // user's from_date
 							System.out.println("What is your departure date? (YYYY-MM-DD)");
@@ -214,10 +224,7 @@ public class CampgroundCLI {
 							
 
 							long difference = departDate1.getTime() - arrivalDate1.getTime();
-							int diffDays = (int) (difference / (24 * 60 * 60 * 1000)); // converting difference through
-																						// milliseconds
-							
-						
+							int diffDays = (int) (difference / (24 * 60 * 60 * 1000)); // converting difference through milliseconds
 							
 							System.out.println("The length of your desired stay comes to " + diffDays + " days.");
 							System.out.println();
@@ -230,7 +237,7 @@ public class CampgroundCLI {
 							int nums2 = 0;
 							System.out.println("----------------------------------------");
 							for (Campgrounds price : fee) {
-								System.out.println("$" + (fee1[nums2] = price.getDaily_fee() + "0" + " is the daily fee."));
+								System.out.println("$" + (fee1[nums2] = price.getDaily_fee() + "0" + " is the daily fee for this site."));
 								String Y = price.getDaily_fee().toString();
 								double yes = Double.parseDouble(Y);
 								double total = (yes * diffDays);
@@ -239,9 +246,7 @@ public class CampgroundCLI {
 								System.out.println();
 								System.out.println("Pack your bags - you're going camping! Your reservation ID is " + confirmed + ".");
 								displayPrettyPicture();
-								
-
-								
+				
 							}
 						}
 						
@@ -268,17 +273,16 @@ public class CampgroundCLI {
 	}
 	
 
-	
 	private void displayPrettyPicture() {
-System.out.println();
-System.out.println("       ______");    
-System.out.println("      /     /\\"); 
-System.out.println("     /     /  \\");
-System.out.println("    /     /----\\_");
-System.out.println("    \"     \"          ).  ");
-System.out.println("   _ ___          o (:') o  "); 
-System.out.println("  (@))_))        o ~/~~\\~ o  "); 
-System.out.println("                  o  o  o	");
-System.out.println();
-}
-}
+		System.out.println();
+		System.out.println("       ______");    
+		System.out.println("      /     /\\"); 
+		System.out.println("     /     /  \\");
+		System.out.println("    /     /----\\_");
+		System.out.println("    \"     \"          ).  ");
+		System.out.println("   _ ___          o (:') o  "); 
+		System.out.println("  (@))_))        o ~/~~\\~ o  "); 
+		System.out.println("                  o  o  o	");
+		System.out.println();
+		}
+	}
